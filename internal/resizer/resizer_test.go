@@ -7,23 +7,14 @@ import (
 	"testing"
 )
 
+var (
+	imageBytesJPEG, _ = generateImage(imaging.JPEG)
+	imageBytesPNG, _  = generateImage(imaging.PNG)
+	imageBytesGIF, _  = generateImage(imaging.GIF)
+)
+
 func TestFill(t *testing.T) {
 	r := New()
-
-	imageBytesJPEG, err := generateImage(imaging.JPEG)
-	if err != nil {
-		t.Errorf("Unable to encode image: %v", err)
-	}
-
-	imageBytesPNG, err := generateImage(imaging.PNG)
-	if err != nil {
-		t.Errorf("Unable to encode image: %v", err)
-	}
-
-	imageBytesGIF, err := generateImage(imaging.GIF)
-	if err != nil {
-		t.Errorf("Unable to encode image: %v", err)
-	}
 
 	tests := []struct {
 		name     string

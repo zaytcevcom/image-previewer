@@ -15,14 +15,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: make lint
+      - name: Lint
         run: make lint
         working-directory: .
 
-      - name: make build
+      - name: Unit tests
+        run: make test
+        working-directory: .
+
+      - name: Build
         run: make build
         working-directory: .
 
-      - name: make test
-        run: make test
+      - name: Integration tests
+        run: make integration-tests
         working-directory: .
