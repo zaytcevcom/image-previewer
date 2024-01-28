@@ -1,0 +1,43 @@
+version: '3'
+services:
+
+  nginx:
+    image: nginx
+    container_name: previewer-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/static:/static
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - previewer_network
+
+  previewer:
+    container_name: previewer-test
+    build:
+      context: ../..
+      dockerfile: ./build/previewer/Dockerfile
+    restart: always
+    volumes:
+      - ../../configs/previewer:/configs/previewer
+    command: sh -c "sleep 5 && ./opt/app/bin --config configs/previewer/config.json"
+    ports:
+      - "8880:80"
+    networks:
+      - previewer_network
+
+  integration_tests:
+    build:
+      context: ../..
+      dockerfile: ./test/Dockerfile
+    command: "true"
+    links:
+      - nginx
+      - previewer
+    networks:
+      - default
+      - previewer_network
+
+networks:
+  previewer_network:
+    driver: bridge
