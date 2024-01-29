@@ -54,7 +54,7 @@ version: build
 
 
 test:
-	go test -race -count 100 -timeout 60m ./internal/...
+	go test -race -count 100 ./internal/...
 
 
 remove-lint-deps:
