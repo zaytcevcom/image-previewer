@@ -18,7 +18,6 @@ func (l *LoggingResponseWriter) WriteHeader(code int) {
 
 func loggingMiddleware(logger Logger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 		startTime := time.Now()
 
 		lrw := LoggingResponseWriter{
@@ -26,7 +25,6 @@ func loggingMiddleware(logger Logger, next http.Handler) http.Handler {
 			ResponseCode:   http.StatusOK,
 		}
 		next.ServeHTTP(&lrw, r)
-
 		latency := time.Since(startTime)
 
 		logger.Info(

@@ -2,9 +2,10 @@ package resizer
 
 import (
 	"bytes"
-	"github.com/disintegration/imaging"
 	"image/color"
 	"testing"
+
+	"github.com/disintegration/imaging"
 )
 
 var (
@@ -84,7 +85,6 @@ func generateImage(format imaging.Format) ([]byte, error) {
 	img := imaging.New(50, 50, color.Black)
 	buf := new(bytes.Buffer)
 	err := imaging.Encode(buf, img, format)
-
 	if err != nil {
 		return nil, err
 	}

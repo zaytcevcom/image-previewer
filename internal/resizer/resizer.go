@@ -3,8 +3,9 @@ package resizer
 import (
 	"bytes"
 	"fmt"
-	"github.com/disintegration/imaging"
 	"image"
+
+	"github.com/disintegration/imaging"
 )
 
 type Resizer struct{}
@@ -14,7 +15,6 @@ func New() Resizer {
 }
 
 func (r Resizer) Fill(data []byte, width uint, height uint) ([]byte, error) {
-
 	if width < 20 || height < 20 {
 		return nil, fmt.Errorf("min width and height: 20px")
 	}
@@ -47,7 +47,7 @@ func (r Resizer) Fill(data []byte, width uint, height uint) ([]byte, error) {
 func getFormat(data []byte) (imaging.Format, error) {
 	_, format, err := image.Decode(bytes.NewReader(data))
 	if err != nil {
-		return imaging.JPEG, fmt.Errorf("failed get format: %s", err)
+		return imaging.JPEG, fmt.Errorf("failed get format: %w", err)
 	}
 
 	if format == "jpeg" {

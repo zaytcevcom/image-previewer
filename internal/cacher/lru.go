@@ -3,6 +3,7 @@ package cacher
 import "sync"
 
 type Key string
+
 type Value interface{}
 
 type Cache interface {

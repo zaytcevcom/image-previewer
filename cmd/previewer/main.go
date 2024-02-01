@@ -4,16 +4,17 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/zaytcevcom/image-previewer/internal/app"
 	"github.com/zaytcevcom/image-previewer/internal/cacher"
 	"github.com/zaytcevcom/image-previewer/internal/fetcher"
 	"github.com/zaytcevcom/image-previewer/internal/logger"
 	"github.com/zaytcevcom/image-previewer/internal/resizer"
 	internalhttp "github.com/zaytcevcom/image-previewer/internal/server/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 var configFile string
@@ -23,7 +24,6 @@ func init() {
 }
 
 func main() {
-
 	flag.Parse()
 
 	config, err := LoadConfig(configFile)

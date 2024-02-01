@@ -3,10 +3,11 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/zaytcevcom/image-previewer/internal/cacher"
-	"github.com/zaytcevcom/image-previewer/internal/utils"
 	"net/http"
 	"strconv"
+
+	"github.com/zaytcevcom/image-previewer/internal/cacher"
+	"github.com/zaytcevcom/image-previewer/internal/utils"
 )
 
 type App struct {
@@ -47,7 +48,6 @@ func New(logger Logger, fetcher Fetcher, cache Cache, resizer Resizer) *App {
 }
 
 func (a *App) Fill(ctx context.Context, header http.Header, url string, width uint, height uint) ([]byte, error) {
-
 	key := cacher.Key(
 		utils.GetMD5Hash(strconv.Itoa(int(width)) + strconv.Itoa(int(height)) + url),
 	)

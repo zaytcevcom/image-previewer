@@ -17,22 +17,21 @@ func New() Fetcher {
 	return Fetcher{}
 }
 
-func (f Fetcher) Fetch(ctx context.Context, header http.Header, rawUrl string) ([]byte, error) {
-
-	parsedUrl, err := url.Parse(rawUrl)
+func (f Fetcher) Fetch(ctx context.Context, header http.Header, rawURL string) ([]byte, error) {
+	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed parse URL: %w", err)
 	}
 
-	if parsedUrl.Scheme == "" {
-		parsedUrl.Scheme = "http"
+	if parsedURL.Scheme == "" {
+		parsedURL.Scheme = "http"
 	}
 
-	if parsedUrl.Scheme != "http" {
+	if parsedURL.Scheme != "http" {
 		return nil, fmt.Errorf("failed scheme URL: %w", err)
 	}
 
-	request, err := http.NewRequestWithContext(ctx, http.MethodGet, parsedUrl.String(), nil)
+	request, err := http.NewRequestWithContext(ctx, http.MethodGet, parsedURL.String(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("failed prepare request: %w", err)
 	}
@@ -43,9 +42,7 @@ func (f Fetcher) Fetch(ctx context.Context, header http.Header, rawUrl string) (
 	if err != nil {
 		return nil, fmt.Errorf("failed request: %w", err)
 	}
-	defer func(Body io.ReadCloser) {
-		_ = Body.Close()
-	}(response.Body)
+	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusNotFound {
 		return nil, ErrNotFound

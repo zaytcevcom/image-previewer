@@ -25,7 +25,6 @@ type Application interface {
 }
 
 func New(logger Logger, app Application, host string, port int) *Server {
-
 	server := &http.Server{
 		Addr:         net.JoinHostPort(host, strconv.Itoa(port)),
 		Handler:      loggingMiddleware(logger, NewHandler(logger, app)),

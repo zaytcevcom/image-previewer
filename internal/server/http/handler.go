@@ -3,8 +3,9 @@ package internalhttp
 import (
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
 )
-import "github.com/gorilla/mux"
 
 type handler struct {
 	logger Logger
@@ -26,7 +27,6 @@ func NewHandler(logger Logger, app Application) http.Handler {
 }
 
 func (s *handler) Fill(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 
 	width, err := strconv.ParseUint(vars["width"], 10, 32)
@@ -44,7 +44,6 @@ func (s *handler) Fill(w http.ResponseWriter, r *http.Request) {
 	url := vars["url"]
 
 	bytes, err := s.app.Fill(r.Context(), r.Header, url, uint(width), uint(height))
-
 	if err != nil {
 		badRequestResponse(w, err, s.logger)
 		return
@@ -53,11 +52,11 @@ func (s *handler) Fill(w http.ResponseWriter, r *http.Request) {
 	successResponse(w, bytes, s.logger)
 }
 
-func methodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {
+func methodNotAllowedHandler(w http.ResponseWriter, _ *http.Request) {
 	http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
 }
 
-func methodNotFoundHandler(w http.ResponseWriter, r *http.Request) {
+func methodNotFoundHandler(w http.ResponseWriter, _ *http.Request) {
 	http.Error(w, "404 Not Found", http.StatusNotFound)
 }
 
@@ -71,8 +70,7 @@ func successResponse(w http.ResponseWriter, bytes []byte, logger Logger) {
 	w.Header().Add("Content-Type", "image/jpeg")
 	w.Header().Add("Content-Length", strconv.Itoa(len(bytes)))
 
-	_, err := w.Write(bytes)
-	if err != nil {
+	if _, err := w.Write(bytes); err != nil {
 		logger.Error(err.Error())
 	}
 }
