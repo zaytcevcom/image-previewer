@@ -15,22 +15,22 @@ func TestGetMD5Hash(t *testing.T) {
 		{
 			name: "empty string",
 			text: "",
-			want: "d41d8cd98f00b204e9800998ecf8427e",
+			want: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 		},
 		{
 			name: "alphanumeric string",
 			text: "abc123",
-			want: "e99a18c428cb38d5f260853678922e03",
+			want: "6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090",
 		},
 		{
 			name: "special characters",
 			text: "#$!",
-			want: "712415625c07d00e6e93aa884801b84e",
+			want: "ba62056c842406d4ec2c34b43127806fbb8a5ebc0fcc04b6c43db75926e92053",
 		},
 		{
 			name: "long string",
 			text: "ThisIsALongStringWithSomeDifferentCharacters!!",
-			want: "dc503be185eb8856b99d4c9bae6e91bc",
+			want: "d876841623daa8467309f4d4f101febce67f25f92d146704f15eb5e3da729323",
 		},
 	}
 
